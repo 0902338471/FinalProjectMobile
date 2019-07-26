@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FinalProject</string>
+    <string name="title_activity_specific_date">SpecificDate</string>
+    <string name="title_activity_calendar">CalendarActivity</string>
+</resources>

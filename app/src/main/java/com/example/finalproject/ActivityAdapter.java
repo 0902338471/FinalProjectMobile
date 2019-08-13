@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,9 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         myItemActivity activityItem = listItems.get(position);
         holder.nameActivity.setText(activityItem.getNameActivity());
+        holder.photoStatus.setImageResource(R.drawable.background);
+        holder.avatar.setImageResource(R.drawable.background);
+        holder.status.setText(activityItem.getStatus());
     }
 
     @Override
@@ -37,10 +42,16 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView nameActivity;
+        EditText nameActivity;
+        ImageView avatar;
+        ImageView photoStatus;
+        EditText status;
         ViewHolder(View itemView) {
             super(itemView);
-            nameActivity = (TextView)itemView.findViewById(R.id.name);
+            nameActivity = (EditText) itemView.findViewById(R.id.nameActivity);
+            avatar=(ImageView) itemView.findViewById(R.id.avartar);
+            photoStatus=(ImageView)itemView.findViewById(R.id.content_image);
+            status=(EditText)itemView.findViewById(R.id.status);
             itemView.setOnClickListener(this);
         }
 

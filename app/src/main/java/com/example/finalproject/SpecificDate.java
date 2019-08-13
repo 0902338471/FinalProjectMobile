@@ -15,23 +15,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
 public class SpecificDate extends AppCompatActivity implements ActivityAdapter.ItemClickListener {
     ActivityAdapter adapter;
-    private ArrayList<myItemActivity> listItemsActivity=new ArrayList<>();
     private ActivityDay activityDay=new ActivityDay();
     int positionClick=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_date);
-        loadingData();
+        loadingDateData();
         updatingView();
     }
 
-    private void loadingData() {
+    private void loadingDateData() {
         //querying data from firebase and displaying on the screen
         String myDate=getIntent().getStringExtra("CurrentDate");
         String myMonth=getIntent().getStringExtra("CurrentMonth");
@@ -42,9 +42,9 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
     private void updatingView()
     {
         RecyclerView myRecyclerView=(RecyclerView)findViewById(R.id.recycle_view);
-        Button addingButton=(Button)findViewById(R.id.addingButton);
+        ImageView addingButton=(ImageView) findViewById(R.id.adding_button);
         myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new ActivityAdapter(this,listItemsActivity);
+        adapter=new ActivityAdapter(this,activityDay.getDaySchedule());
         adapter.setClickListener(this);
         final Context context=this;
         myRecyclerView.setAdapter(adapter);
@@ -54,6 +54,7 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
                 Log.d("aa","You've clicked here");
                 Intent i =new Intent(context,ActivityViewing.class);
                 i.putExtra("nameActivity","Empty");
+                i.putExtra("Status","Enter Status");
                 i.putExtra("positionClick","NoPosition");
                 startActivityForResult(i,1);
             }
@@ -63,6 +64,9 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
     public void onItemClick(View view, int position) {
         Intent i=new Intent(this,ActivityViewing.class);
         i.putExtra("nameActivity",adapter.getItem(position).getNameActivity());
+        i.putExtra("Status",adapter.getItem(position).getStatus());
+       // i.putExtra("Avatar",adapter.getItem(position).getAvatar().getFormat());
+       // i.putExtra("photoStatus",adapter.getItem(position).getPhotoStatus().getFormat());
         i.putExtra("positionClick",String.valueOf(position));
         positionClick=position;
         startActivityForResult(i,1);
@@ -76,21 +80,25 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
             if (resultCode == RESULT_OK) {
                 // Get String data from Intent
                 String returnStringname = data.getStringExtra("nameActivityBack");
+                String returnStatus=data.getStringExtra("StatusBack");
                 // Set text view with string
-                myItemActivity tmp=new myItemActivity(returnStringname);
+                myItemActivity tmp=new myItemActivity(returnStringname,returnStatus,activityDay.getDate());
                 String checking=data.getStringExtra("positionClickBack");
                 String uid=getIntent().getStringExtra("Uid");
                 if(checking.equals("NoPosition"))
                 {
-                    listItemsActivity.add(listItemsActivity.size(),tmp);
+                    //listItemsActivity.add(listItemsActivity.size(),tmp);
+                    activityDay.addingItemIntoDaySchedule(tmp);
                     Log.d("Hello I'm Here","ss");
-                    adapter.notifyItemInserted(listItemsActivity.size()-1);
+                    //adapter.notifyItemInserted(listItemsActivity.size()-1);
+                    adapter.notifyItemInserted(activityDay.getSizeOfSchedule()-1);
                 }
                 else
                 {
                     Log.d("Check",data.getStringExtra("positionClickBack"));
                     int position=Integer.parseInt(checking);
-                    listItemsActivity.set(position,tmp);
+                   // listItemsActivity.set(position,tmp);
+                    activityDay.setItemInDaySchedule(position,tmp);
                     adapter.notifyItemChanged(position);
                 }
                 /*thisuser.setList(listItems);

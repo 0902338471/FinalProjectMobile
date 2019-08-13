@@ -6,16 +6,24 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".SpecificDate"
-    tools:showIn="@layout/activity_specific_date">
-    <Button
-        android:layout_width="wrap_content"
+    tools:showIn="@layout/activity_specific_date"
+    android:orientation="vertical">
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="clickhere"
-        android:id="@+id/addingButton"/>
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <ImageView
+        android:id="@+id/adding_button"
+        android:layout_width="56dp"
+        android:layout_height="47dp"
+        android:layout_gravity="right"
+        android:src="@drawable/add" />
+    </com.google.android.material.appbar.AppBarLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/recycle_view"
         android:orientation="vertical">
     </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>

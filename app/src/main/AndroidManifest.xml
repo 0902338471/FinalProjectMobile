@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.finalproject">
+
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ActivityViewing"></activity>
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".ActivityViewing" />
         <activity
             android:name=".CalendarActivity"
             android:label="@string/title_activity_calendar"
@@ -20,7 +25,7 @@
             android:name=".SpecificDate"
             android:label="@string/title_activity_specific_date"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

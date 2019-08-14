@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Wrong username or password", Toast.LENGTH_SHORT).show();
                         }
                         else{
-                            Intent i= new Intent(LoginActivity.this,MainActivity.class);
+                            Intent i= new Intent(LoginActivity.this,CalendarActivity.class);
                             String UserID= task.getResult().getUser().getUid();
                             String UserEmail=username.getText().toString();
                             String UserPasswod=password.getText().toString();

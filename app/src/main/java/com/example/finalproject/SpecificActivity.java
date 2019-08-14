@@ -2,9 +2,10 @@ package com.example.finalproject;
 
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SpecificActivity {
+public class SpecificActivity implements Serializable {
     private ArrayList<Image> myImageActivity;
     private String myDescripActivity;
 

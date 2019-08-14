@@ -1,9 +1,12 @@
 package com.example.finalproject;
 
-public class MyDate {
+import java.io.Serializable;
+
+public class MyDate implements Serializable {
     private String month;
     private String dayOfMonth;
     private String year;
+    public MyDate(){}
     public MyDate(String monthin,String dayin,String yearin)
     {
         month=monthin;

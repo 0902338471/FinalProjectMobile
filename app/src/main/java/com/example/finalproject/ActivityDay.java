@@ -1,17 +1,23 @@
 package com.example.finalproject;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.ArrayList;
-public class ActivityDay {
+public class ActivityDay implements Serializable {
     private MyDate myDate;
+    private boolean isUsed;
     private ArrayList<myItemActivity> daySchedule;
     public ActivityDay(){
+        isUsed=false;
         daySchedule=new ArrayList<>();
     }
+    public void initdaySchedule(){daySchedule=new ArrayList<>();}
     public void setDate(MyDate date) {
         this.myDate = date;
     }
-
+    public void activateDate(){
+        this.isUsed=true;
+    }
     public void setDaySchedule(ArrayList<myItemActivity> daySchedule) {
         this.daySchedule = daySchedule;
     }

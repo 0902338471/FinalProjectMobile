@@ -7,8 +7,11 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -19,6 +22,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,30 +31,80 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
     int positionClick=-1;
     private int mIndexDate;
     private User mUser;
+    private MyDate curDate;
     private ActivityDay mActivityDate;
     private FirebaseDatabase mFirebaseDatabase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
+    public static final String Database_Path = "UserImageDatabase1";
+    RecyclerView myRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_date);
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
+        myRef = mFirebaseDatabase.getReference(SpecificDate.Database_Path);
+        mActivityDate=new ActivityDay();
+        //
+        myRecyclerView=(RecyclerView)findViewById(R.id.recycle_view);
+        myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //
         getDataFromIntent();
+        AccesingDatabase();
         //getActivityDate();
         //loadingDateData();
         updatingView();
     }
 
+    private void AccesingDatabase() {
+        myRef.child("Users/").child(mUser.getUserID())/*.child(String.valueOf(mIndexDate))*/.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                mUser=snapshot.getValue(User.class);
+                mActivityDate=mUser.getuserCalendar().get(mIndexDate);
+                if(mActivityDate==null)
+                {
+                    Log.d("itisnull","meme");
+                    mActivityDate=new ActivityDay();
+                }
+                else
+                {
+                    Log.d("itisnotnull","aa"+String.valueOf(mActivityDate.getSizeOfSchedule()));
+                }
+                mActivityDate.setDate(curDate);
+                adapter=new ActivityAdapter(SpecificDate.this,mActivityDate.getDaySchedule());
+               // adapter = new RecyclerViewAdapter(getApplicationContext(), list);
+                adapter.setClickListener(SpecificDate.this);
+                myRecyclerView.setAdapter(adapter);
+                mActivityDate.setDate(curDate);
+                Toast.makeText(getApplicationContext(), "Successful Retrieving Data!!!", Toast.LENGTH_LONG).show();
+                //recyclerView.setAdapter(adapter);
+
+                // Hiding the progress dialog.
+               // progressDialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+                // Hiding the progress dialog.
+               // progressDialog.dismiss();
+
+            }
+        });
+    }
+
     private void getDataFromIntent() {
         mUser=(User)getIntent().getSerializableExtra("userClass");
-        mActivityDate=(ActivityDay)getIntent().getSerializableExtra("mActivityDay") ;
+        //mActivityDate=(ActivityDay)getIntent().getSerializableExtra("mActivityDay") ;
         Log.d("prepar2",String.valueOf(mActivityDate.getSizeOfSchedule()));
+        curDate=(MyDate)getIntent().getSerializableExtra("StructureOfDate");
+        if(curDate==null)
+            Log.d("nullcmnr","aa");
         mIndexDate=Integer.parseInt(getIntent().getStringExtra("IndexOfDate"));
-        mUser.UpdateCalendar(mIndexDate,mActivityDate);
-        Log.d("prepare3",String.valueOf(mUser.getuserCalendar().get(mIndexDate).getSizeOfSchedule()));
+        //mUser.UpdateCalendar(mIndexDate,mActivityDate);
+        //Log.d("prepare3",String.valueOf(mUser.getuserCalendar().get(mIndexDate).getSizeOfSchedule()));
     }
 
     private void getActivityDate()
@@ -71,14 +125,14 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
     }*/
     private void updatingView()
     {
-        RecyclerView myRecyclerView=(RecyclerView)findViewById(R.id.recycle_view);
+       // RecyclerView myRecyclerView=(RecyclerView)findViewById(R.id.recycle_view);
         ImageView addingButton=(ImageView) findViewById(R.id.adding_button);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter=new ActivityAdapter(this,mActivityDate.getDaySchedule());
+       // myRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //adapter=new ActivityAdapter(this,mActivityDate.getDaySchedule());
         Log.d("nameacti",String.valueOf((mActivityDate.getSizeOfSchedule())));
-        adapter.setClickListener(this);
         final Context context=this;
-        myRecyclerView.setAdapter(adapter);
+        //adapter.setClickListener(this);
+        //myRecyclerView.setAdapter(adapter);
         addingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +141,13 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
                 i.putExtra("nameActivity","Empty");
                 i.putExtra("Status","Enter Status");
                 i.putExtra("positionClick","NoPosition");
+                i.putExtra("DateStructure",curDate);
+                i.putExtra("UserUID",mUser.getUserID());
+                i.putExtra("IndexPass",String.valueOf(mIndexDate));
+                i.putExtra("UserClass",mUser);
+                Log.d("Index",String.valueOf(mIndexDate));
+                i.putExtra("SizePass",String.valueOf(mActivityDate.getSizeOfSchedule()));
+                Log.d("Size",String.valueOf(mActivityDate.getSizeOfSchedule()));
                 startActivityForResult(i,1);
             }
         });
@@ -96,9 +157,15 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
         Intent i=new Intent(this,ActivityViewing.class);
         i.putExtra("nameActivity",adapter.getItem(position).getNameActivity());
         i.putExtra("Status",adapter.getItem(position).getStatus());
-       // i.putExtra("Avatar",adapter.getItem(position).getAvatar().getFormat());
-       // i.putExtra("photoStatus",adapter.getItem(position).getPhotoStatus().getFormat());
+        //i.putExtra("Avatar",adapter.getItem(position).getAvatar().getFormat());
+        i.putExtra("photoStatus",adapter.getItem(position).getPhotoStatus());
+        i.putExtra("DateStructure",curDate);
+        i.putExtra("IndexPass",String.valueOf(mIndexDate));
+        i.putExtra("UserClass",mUser);
         i.putExtra("positionClick",String.valueOf(position));
+        i.putExtra("UserUID",mUser.getUserID());
+        i.putExtra("SizePass",String.valueOf(mActivityDate.getSizeOfSchedule()));
+        //i.putExtra("Date",adapter.getItem(position).getStringDate());
         positionClick=position;
         startActivityForResult(i,1);
     }
@@ -112,8 +179,11 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
                 // Get String data from Intent
                 String returnStringname = data.getStringExtra("nameActivityBack");
                 String returnStatus=data.getStringExtra("StatusBack");
+                String returnDate=data.getStringExtra("DateBack");
+                String returnphotoURL=data.getStringExtra("photoURLBack");
+                Log.d("photoback","aa"+returnphotoURL);
                 // Set text view with string
-                myItemActivity tmp=new myItemActivity(returnStringname,returnStatus,mActivityDate.getDate());
+                myItemActivity tmp=new myItemActivity(String.valueOf(mActivityDate.getSizeOfSchedule()+1),returnStringname,returnStatus,mActivityDate.getDate(),returnphotoURL);
                 String checking=data.getStringExtra("positionClickBack");
                 String uid=getIntent().getStringExtra("Uid");
                 if(checking.equals("NoPosition"))

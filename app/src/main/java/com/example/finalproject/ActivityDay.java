@@ -25,6 +25,7 @@ public class ActivityDay implements Serializable {
     {
         return this.myDate;
     }
+    //public String getStringDate(){return myDate.getDayOfMonth()+'/'+myDate.getMonth()+'/'+myDate.getYear();}
     public ArrayList<myItemActivity> getDaySchedule()
     {
         return this.daySchedule;

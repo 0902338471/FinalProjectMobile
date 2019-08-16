@@ -78,14 +78,27 @@
 
     <Button
         android:id="@+id/backbutton"
-        android:layout_width="219dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="93dp"
-        android:layout_marginEnd="93dp"
-        android:layout_marginBottom="39dp"
+        android:layout_width="179dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="37dp"
         android:gravity="center"
         android:text="Save"
+        app:layout_constraintEnd_toStartOf="@+id/chooseImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_image" />
+
+    <Button
+        android:id="@+id/chooseImage"
+        android:layout_width="163dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="37dp"
+        android:layout_marginTop="31dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="36dp"
+        android:text="Choose Image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/backbutton"
+        app:layout_constraintTop_toBottomOf="@+id/content_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,6 +24,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
 import android.widget.CalendarView;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -48,7 +49,7 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         Log.d("ss","On Calendar");
-        simpleCalendarView=(CalendarView)findViewById(R.id.simpleCalendarView);
+        simpleCalendarView=findViewById(R.id.simpleCalendarView);
         //setAvatarButton();
         onPreparingUser();
         //onCreatingNotification();

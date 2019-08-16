@@ -132,8 +132,8 @@ public class ActivityViewing extends AppCompatActivity {
     private void onDisplayingData() {
        // FloatingActionButton fab = findViewById(R.id.fab);
         Intent passIntent=getIntent();
-        nameActivity.setText(passIntent.getStringExtra("nameActivity"));
-        status.setText(passIntent.getStringExtra("Status"));
+        //nameActivity.setText(passIntent.getStringExtra("nameActivity"));
+        //status.setText(passIntent.getStringExtra("Status"));
         //mUser=(User)passIntent.getSerializableExtra("UserClass");
         actiDate=(MyDate)passIntent.getSerializableExtra("DateStructure");
         String passcontentPhoto=passIntent.getStringExtra("photoStatus");

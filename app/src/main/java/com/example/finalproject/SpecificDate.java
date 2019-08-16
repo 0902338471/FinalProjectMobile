@@ -138,8 +138,8 @@ public class SpecificDate extends AppCompatActivity implements ActivityAdapter.I
             public void onClick(View view) {
                 Log.d("aa","You've clicked here");
                 Intent i =new Intent(context,ActivityViewing.class);
-                i.putExtra("nameActivity","Empty");
-                i.putExtra("Status","Enter Status");
+                //i.putExtra("nameActivity","Empty");
+                //i.putExtra("Status","Enter Status");
                 i.putExtra("positionClick","NoPosition");
                 i.putExtra("DateStructure",curDate);
                 i.putExtra("UserUID",mUser.getUserID());

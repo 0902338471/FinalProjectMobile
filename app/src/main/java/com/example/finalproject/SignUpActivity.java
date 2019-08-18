@@ -81,7 +81,7 @@ public class SignUpActivity extends AppCompatActivity {
                                     else{
                                         Toast.makeText(SignUpActivity.this, "sign up successfully", Toast.LENGTH_SHORT).show();
 
-                                        Intent i=new Intent(SignUpActivity.this,MainActivity.class);
+                                            Intent i=new Intent(SignUpActivity.this,CalendarActivity.class);
                                         String UserID=task.getResult().getUser().getUid();
                                         String UserEmail=email.getText().toString();
                                         String UserPassword=password.getText().toString();

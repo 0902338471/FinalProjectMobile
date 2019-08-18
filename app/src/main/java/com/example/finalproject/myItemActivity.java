@@ -11,6 +11,7 @@ public class myItemActivity implements Serializable {
     private String status;
     private MyDate dateInfoOfActivity;
     private String ActiID;
+    private int positionOnOneDay;
     //private String dateInfoInString;
     myItemActivity(){
         nameActivity="No Name";
@@ -47,5 +48,7 @@ public class myItemActivity implements Serializable {
     public MyDate getDateInfoOfActivity(){return dateInfoOfActivity;}
     public void setActiID(String IDin){this.ActiID=IDin;}
     public String getID(){return ActiID;}
+    public int getPositionOnOneDay(){return this.positionOnOneDay;}
+    public void setPositionOnOneDay(int position){ this.positionOnOneDay=position;}
     public String getStringDate(){return dateInfoOfActivity.getDayOfMonth()+'/'+dateInfoOfActivity.getMonth()+'/'+dateInfoOfActivity.getYear();}
 }

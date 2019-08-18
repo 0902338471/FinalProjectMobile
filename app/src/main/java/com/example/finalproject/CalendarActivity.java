@@ -26,6 +26,7 @@ import android.view.View;
 import android.widget.Button;
 
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,6 +42,8 @@ public class CalendarActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference myRef;
     Button changeAvatarButton;
+    Button searchButton;
+    EditText textField;
     int Image_Request_Code = 7;
     private Uri FilePathUri;
 
@@ -49,36 +52,45 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
         Log.d("ss","On Calendar");
-        simpleCalendarView=findViewById(R.id.simpleCalendarView);
+        onFindViewByID();
         //setAvatarButton();
         onPreparingUser();
+        onSearchButtonClicked();
         //onCreatingNotification();
         simpleCalendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int year, int month, int dayOfMonth) {
                 if(isuserActive)
-                    callingSpecificActivity(calendarView,year,month,dayOfMonth);
+                    callingSpecificActivity(calendarView,year,month+1,dayOfMonth);
                 else
                   Toast.makeText(getApplicationContext(), "Waiting for user to be active", Toast.LENGTH_LONG).show();
             }
         });
     }
 
-    private void setAvatarButton() {
-        changeAvatarButton=(Button)findViewById(R.id.changeAvatar);
-        changeAvatarButton.setOnClickListener(new View.OnClickListener() {
+    private void onSearchButtonClicked() {
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-
-                // Setting intent type as image to select image from phone storage.
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                int Image_Request_Code = 7;
-                startActivityForResult(Intent.createChooser(intent, "Please Select Image"), Image_Request_Code);
+                if(!isuserActive)
+                    Toast.makeText(getApplicationContext(), "Waiting for user to be active", Toast.LENGTH_LONG).show();
+                else
+                {
+                    Intent i=new Intent(CalendarActivity.this,SearchViewingResult.class);
+                    i.putExtra("QueryActivity",textField.getText().toString());
+                    i.putExtra("UserID",mUser.getUserID());
+                    startActivity(i);
+                }
             }
         });
     }
+
+    private void onFindViewByID() {
+        simpleCalendarView=findViewById(R.id.simpleCalendarView);
+        searchButton=(Button)findViewById(R.id.SearchButton);
+        textField=(EditText)findViewById(R.id.textSearch);
+    }
+
 
     private void onCreatingNotification() {
         Calendar calendar = Calendar.getInstance();

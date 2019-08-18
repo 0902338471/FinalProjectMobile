@@ -2,4 +2,6 @@
     <string name="app_name">FinalProject</string>
     <string name="title_activity_specific_date">SpecificDate</string>
     <string name="title_activity_calendar">CalendarActivity</string>
+    <string name="title_activity_search_viewing_result">SearchViewingResult</string>
+    <string name="title_activity_viewing_search">ActivityViewingSearch</string>
 </resources>

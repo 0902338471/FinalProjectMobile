@@ -22,14 +22,19 @@
         <activity
             android:name=".ActivityViewingSearch"
             android:label="@string/title_activity_viewing_search"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".SearchViewingResult"
             android:label="@string/title_activity_search_viewing_result"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainActivity" />
-        <activity android:name=".ActivityViewing" />
+        <activity android:name=".SignUpActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ActivityViewing"
+            android:screenOrientation="portrait"/>
 
         <receiver android:name=".AlarmReceiver" />
 
@@ -40,8 +45,10 @@
         <activity
             android:name=".SpecificDate"
             android:label="@string/title_activity_specific_date"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

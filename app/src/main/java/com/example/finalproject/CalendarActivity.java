@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.NotificationCompat;
 
@@ -28,6 +29,7 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -44,6 +46,7 @@ public class CalendarActivity extends AppCompatActivity {
     Button changeAvatarButton;
     Button searchButton;
     EditText textField;
+    SearchView searchView;
     int Image_Request_Code = 7;
     private Uri FilePathUri;
 
@@ -69,26 +72,32 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     private void onSearchButtonClicked() {
-        searchButton.setOnClickListener(new View.OnClickListener() {
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void onClick(View view) {
+            public boolean onQueryTextSubmit(String query) {
                 if(!isuserActive)
                     Toast.makeText(getApplicationContext(), "Waiting for user to be active", Toast.LENGTH_LONG).show();
                 else
                 {
                     Intent i=new Intent(CalendarActivity.this,SearchViewingResult.class);
-                    i.putExtra("QueryActivity",textField.getText().toString());
+                    i.putExtra("QueryActivity",query);
                     i.putExtra("UserID",mUser.getUserID());
                     startActivity(i);
                 }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
             }
         });
     }
 
     private void onFindViewByID() {
         simpleCalendarView=findViewById(R.id.simpleCalendarView);
-        searchButton=(Button)findViewById(R.id.SearchButton);
-        textField=(EditText)findViewById(R.id.textSearch);
+        searchView=findViewById(R.id.searchview);
     }
 
 

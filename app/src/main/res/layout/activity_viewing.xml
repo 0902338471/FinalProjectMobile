@@ -36,17 +36,15 @@
 
     <ImageView
         android:id="@+id/content_image"
-        android:layout_width="352dp"
-        android:layout_height="273dp"
+        android:layout_width="357dp"
+        android:layout_height="386dp"
         android:layout_marginStart="30dp"
-        android:baselineAlignBottom="true"
         android:layout_marginTop="42dp"
         android:layout_marginEnd="30dp"
+        android:baselineAlignBottom="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/status"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/status" />
 
     <EditText
         android:id="@+id/date"
@@ -62,8 +60,8 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/status"
-        android:layout_width="361dp"
-        android:layout_height="150dp"
+        android:layout_width="357dp"
+        android:layout_height="44dp"
         android:layout_marginStart="22dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="22dp"
@@ -82,27 +80,31 @@
         android:layout_width="179dp"
         android:layout_height="57dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="36dp"
-        android:gravity="center"
+        android:layout_marginTop="24dp"
         android:background="@drawable/rounded_button"
-        android:textSize="16dp"
+        android:baselineAlignBottom="true"
+        android:gravity="center"
         android:text="Save"
         android:textColor="#fff"
-        android:baselineAlignBottom="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_image" />
 
     <Button
         android:id="@+id/chooseImage"
         android:layout_width="181dp"
         android:layout_height="57dp"
+        android:layout_marginTop="24dp"
+        android:clickable="true"
+        android:foreground="?attr/selectableItemBackgroundBorderless"
         android:layout_marginEnd="16dp"
-        android:textColor="#fff"
-        android:layout_marginBottom="36dp"
         android:background="@drawable/rounded_button"
-        android:textSize="16dp"
         android:baselineAlignBottom="true"
         android:text="Choose Image"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:textColor="#fff"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/content_image" />
 </androidx.constraintlayout.widget.ConstraintLayout>
